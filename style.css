@@ -1,0 +1,272 @@
+* {
+  box-sizing: border-box;
+}
+
+/* ---------- Base: font and background ---------- */
+body {
+  margin: 0;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1.125rem;          /* 18px: comfortable reading size */
+  line-height: 1.7;
+  color: #e8e2d9;               /* warm off-white, easier on the eyes than pure white */
+
+  /* Moody cinematic background: deep teal base with a faint warm glow */
+  background-color: #0f1a24;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(201, 138, 74, 0.18), transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(47, 94, 120, 0.35), transparent 60%),
+    linear-gradient(180deg, #14232f 0%, #0c141c 100%);
+  background-attachment: fixed;
+}
+
+/* Optional film grain for atmosphere */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ---------- Typography ---------- */
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);     /* scales with screen: min, ideal, max */
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  margin: 20px 0 10px;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: normal;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0 0 30px;
+}
+
+p {
+  max-width: 62ch;              /* ~62 characters per line is the readable sweet spot */
+  margin: 0 auto 1em;
+}
+
+a {
+  color: #d9a95b;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+/* ---------- Hero ---------- */
+.hero {
+  min-height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 24px;
+
+  /* Your photograph as the background */
+  background-image:
+    linear-gradient(
+      rgba(10, 16, 22, 0.35),
+      rgba(10, 16, 22, 0.65)
+    ),
+    url("photos/intro.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-content {
+  max-width: 1000px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero p {
+  max-width: 600px;
+  margin: 0 auto 24px;
+}
+
+.hero .button {
+  margin-top: 10px;
+}
+
+
+/* ---------- Sections ---------- */
+section {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+/* ---------- Albums ---------- */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+
+.album {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.album img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;            /* fills the box, crops instead of stretching */
+  display: block;
+  transition: transform 0.6s;
+}
+
+.album:hover img {
+  transform: scale(1.06);
+}
+
+.album-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 50px 16px 16px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+  color: #ffffff;
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* ---------- Album page gallery ---------- */
+.album-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.gallery img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- Social icons ---------- */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin: 20px 0;
+}
+
+.social-links a {
+  color: #e8e2d9;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.social-links svg {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.social-links a:hover {
+  color: #d9a95b;
+  transform: scale(1.15);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+
+/* ---------- Small screens ---------- */
+@media (max-width: 500px) {
+  .album-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Center a final odd album on desktop ---------- */
+@media (min-width: 501px) {
+  .album-grid .album:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 10px);
+    justify-self: center;
+  }
+}
+
+
+/* ---------- About page photos ---------- */
+.about-gallery {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.about-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-photo-grid img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+  transition: transform 0.4s ease;
+}
+
+.about-photo-grid img:hover {
+  transform: scale(1.02);
+}
+
+.about-photo-grid img:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  width: 60%;
+  justify-self: center;
+  aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 500px) {
+  .about-photo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-photo-grid img:last-child:nth-child(odd) {
+    grid-column: auto;
+    width: 100%;
+  }
+}
+
